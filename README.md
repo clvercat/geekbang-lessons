@@ -44,7 +44,7 @@ java -jar projects/stage-0/user-platform/user-web/target/user-web-v1-SNAPSHOT-wa
 
 #### 自定义 MBean
 
-org.geektimes.projects.user.jmx.Custom
+`org.geektimes.projects.user.jmx.Custom`
 
 #### 注册
 
