@@ -10,6 +10,10 @@
         <param-name>application.name</param-name>
         <param-value>user-web</param-value>
     </context-param>
+    
+    <listener>
+        <listener-class>org.geektimes.projects.user.web.listener.MyListener</listener-class>
+    </listener>
 
     <!-- 请确保这个 Listener 放置在首位 -->
     <!--<listener>
