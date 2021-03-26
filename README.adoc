@@ -26,8 +26,9 @@ toc::[]
 
 == 第四周作业
 
-[quote,作业要求]
 ____
+作业要求
+
 . 完善 my dependency-injection 模块
 * 脱离 web.xml 配置实现 ComponentContext 自动初始化
 * 使用独立模块并且能够在 user-web 中运行成功
