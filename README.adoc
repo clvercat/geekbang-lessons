@@ -1,5 +1,5 @@
 = geekbang-lessons
-:toc: left
+:toc: preamble
 :icons: font
 :source-highlighter: rouge
 
