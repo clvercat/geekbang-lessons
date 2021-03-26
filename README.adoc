@@ -98,3 +98,10 @@ System.out.println(componentNames);
 ComponentContext componentNames:
 [maxValue, jdbc/UserPlatformDB, bean/EntityManager, bean/UserService, bean/DBConnectionManager, bean/Validator]
 ----
+
+=== Config 对象如何能被 my-web-mvc 使用
+
+[%hardbreaks]
+思路:
+实现 `ServletRequestListener`, 拿到 config 对象后 `javax.servlet.ServletRequest.setAttribute`
+请求的时候再 `javax.servlet.ServletRequest.getAttribute` 取出来
