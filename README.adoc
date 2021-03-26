@@ -37,10 +37,10 @@ toc::[]
 . 去提前阅读 Servlet 规范中 Security 章节（Servlet 容器安全）
 ****
 
-=== 脱离 web.xml 配置实现 ComponentContext 自动初始化
+=== my-dependency-injection
 
 [.lead]
-my-dependency-injection
+脱离 web.xml 配置实现 ComponentContext 自动初始化
 
 ==== 自定义 `ServletContextListener`
 
@@ -76,5 +76,24 @@ link:projects/stage-0/user-platform/my-dependency-injection/src/main/resources/M
 org.geektimes.config.ComponentContainerInitializer
 ----
 
+==== 在 `user-web` 中验证
 
+. 注释掉 link:projects/stage-0/user-platform/user-web/src/main/webapp/WEB-INF/web.xml[web.xml] 中的 listener
 
+. link:projects/stage-0/user-platform/user-web/src/main/java/org/geektimes/projects/user/web/controller/HelloWorldController.java[HelloWorldController] 中调用 `ClassicComponentContext` 方法
++
+[source,java]
+----
+ClassicComponentContext instance = ClassicComponentContext.getInstance();
+List<String> componentNames = instance.getComponentNames();
+System.out.println("ComponentContext componentNames:");
+System.out.println(componentNames);
+----
+
+. 启动应用, 浏览器访问 `http://localhost:8080/hello/world`
++
+.控制台返回注入信息, 成功
+----
+ComponentContext componentNames:
+[maxValue, jdbc/UserPlatformDB, bean/EntityManager, bean/UserService, bean/DBConnectionManager, bean/Validator]
+----

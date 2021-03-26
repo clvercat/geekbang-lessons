@@ -1,5 +1,7 @@
 package org.geektimes.projects.user.web.controller;
 
+import java.util.List;
+import org.geektimes.context.ClassicComponentContext;
 import org.geektimes.web.mvc.controller.PageController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,10 @@ public class HelloWorldController implements PageController {
     @POST
     @Path("/world") // /hello/world -> HelloWorldController
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+        ClassicComponentContext instance = ClassicComponentContext.getInstance();
+        List<String> componentNames = instance.getComponentNames();
+        System.out.println("ComponentContext componentNames:");
+        System.out.println(componentNames);
         return "index.jsp";
     }
 }
