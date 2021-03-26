@@ -1,5 +1,6 @@
 = geekbang-lessons
-:toc: preamble
+:toc: macro
+:toclevels: 4
 :icons: font
 :source-highlighter: rouge
 
@@ -17,6 +18,12 @@ mvn -f projects/stage-0/user-platform/pom.xml clean package -U
 java -jar projects/stage-0/user-platform/user-web/target/user-web-v1-SNAPSHOT-war-exec.jar
 ----
 
+'''
+
+toc::[]
+
+'''
+
 == 第四周作业
 
 .作业要求
@@ -29,3 +36,45 @@ java -jar projects/stage-0/user-platform/user-web/target/user-web-v1-SNAPSHOT-wa
 * 可能在 ServletContext 获取如何通过 ThreadLocal 获取
 . 去提前阅读 Servlet 规范中 Security 章节（Servlet 容器安全）
 ****
+
+=== 脱离 web.xml 配置实现 ComponentContext 自动初始化
+
+[.lead]
+my-dependency-injection
+
+==== 自定义 `ServletContextListener`
+
+link:projects/stage-0/user-platform/my-dependency-injection/src/main/java/org/geektimes/config/ComponentContextListener.java[org.geektimes.config.ComponentContextListener]
+
+[source,java]
+----
+@Override
+public void contextInitialized(ServletContextEvent sce) {
+  ServletContext ctx = sce.getServletContext();
+  ClassicComponentContext componentContext = new ClassicComponentContext();
+  componentContext.init(ctx);
+}
+----
+
+==== 添加自定义 `ServletContextListener`
+
+link:projects/stage-0/user-platform/my-dependency-injection/src/main/java/org/geektimes/config/ComponentContainerInitializer.java[org.geektimes.config.ComponentContainerInitializer]
+
+[source,java]
+----
+@Override
+public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
+  ctx.addListener(ComponentContextListener.class);
+}
+----
+
+==== 配置 SPI
+
+link:projects/stage-0/user-platform/my-dependency-injection/src/main/resources/META-INF/services/javax.servlet.ServletContainerInitializer[javax.servlet.ServletContainerInitializer]
+
+----
+org.geektimes.config.ComponentContainerInitializer
+----
+
+
+
